@@ -3,9 +3,10 @@ import re
 def escape_quotes(text):
     def replace_func(match):
         word = match.group(1)
-        return f"\\'{''.join(c if c != "'" else '\\'' for c in word)}\\'"
+        # Properly escape single quotes within the quoted text
+        return f"\\'{word.replace('\'', '\\\\\'')}\\'"
 
-    pattern = r"'([^']+)'"
+    pattern = r"'([^']*)'"
     return re.sub(pattern, replace_func, text)
 
 # Example usage
